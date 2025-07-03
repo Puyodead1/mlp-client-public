@@ -2,13 +2,7 @@ name: Build and Release
 
 on:
     push:
-        branches:
-            - "1.21.4"
-        paths-ignore:
-            - gradle.properties
     pull_request:
-        branches:
-            - "1.21.4"
     workflow_dispatch:
 
 jobs:
@@ -29,11 +23,11 @@ jobs:
               run: |
                   # Extract mod_version from gradle.properties
                   version=$(grep "^mod_version" gradle.properties | cut -d'=' -f2)
-                  base_version=$(echo "$version" | cut -d'_' -f1)
-                  build_number=$(echo "$version" | grep -oP 'build\K\d+')
+                  base_version=$(echo "$version" | cut -d'-' -f1)
+                  build_number=$(echo "$version" | grep -oP '\-\K\d+')
 
                   new_build_number=$((build_number + 1))
-                  new_version="${base_version}_build${new_build_number}"
+                  new_version="${base_version}-${new_build_number}"
 
                   sed -i "s/^mod_version=.*/mod_version=${new_version}/" gradle.properties
                   echo "Updated mod_version to ${new_version}"
@@ -67,7 +61,7 @@ jobs:
 
             - name: Get current branch
               id: branch
-              run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+              run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/} | sed 's/_.*//')"
 
             - name: Create or update release
               id: create_release
@@ -77,7 +71,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   files: build/libs/*.jar
-                  tag_name: branch-${{ steps.branch.outputs.branch }}
+                  tag_name: ${{ steps.branch.outputs.branch }}
                   name: Release ${{ steps.branch.outputs.branch }}
                   draft: false
                   fail_on_unmatched_files: true
