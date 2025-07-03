@@ -1,0 +1,12 @@
+{
+  "shot": {
+    "sounds": [
+      "mlp:shot"
+    ]
+  },
+  "cock": {
+    "sounds": [
+      "mlp:cock"
+    ]
+  }
+}

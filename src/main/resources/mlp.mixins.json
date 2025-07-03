@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "puyodead1.mlp.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "CapeFeatureRendererMixin",
+    "ClientConnectionStateMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "GameMenuScreenMixin",
+    "GameOptionsMixin",
+    "HotbarStorageMixin",
+    "LogoDrawerMixin",
+    "MainMixin",
+    "MinecraftClientMixin",
+    "MultiplayerScreenMixin",
+    "PlayerListEntryMixin",
+    "PlayerListHudMixin",
+    "ServerInfoMixin",
+    "SplashTextRendererMixin",
+    "TitleScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "mlp-refmap.json",
+  "mixins": [
+    "SystemsMixin"
+  ]
+}

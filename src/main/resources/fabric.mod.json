@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "mlp",
+  "version": "${version}",
+  "name": "MLP",
+  "description": "Basically an MCSDC meteor mod",
+  "authors": [
+    "nxyi",
+    "Puyodead1",
+    "n-client contributors"
+  ],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/mlp/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "puyodead1.mlp.MLPMod"
+    ],
+    "meteor": [
+      "puyodead1.mlp.modules.MLPAddOn"
+    ]
+  },
+  "accessWidener": "mlp.accesswidener",
+  "mixins": [
+    "mlp.mixins.json"
+  ],
+  "breaks": {
+    "rrls": "*"
+  },
+  "depends": {
+    "java": ">=21",
+    "minecraft": ">=1.21",
+    "meteor-client": "*"
+  }
+}
