@@ -2,6 +2,8 @@ name: Build and Release
 
 on:
     push:
+        paths-ignore:
+            - gradle.properties
     pull_request:
     workflow_dispatch:
 
@@ -20,6 +22,7 @@ jobs:
                   distribution: "temurin"
 
             - name: Increment build number
+              id: increment
               run: |
                   # Extract mod_version from gradle.properties
                   version=$(grep "^mod_version" gradle.properties | cut -d'=' -f2)
@@ -31,6 +34,8 @@ jobs:
 
                   sed -i "s/^mod_version=.*/mod_version=${new_version}/" gradle.properties
                   echo "Updated mod_version to ${new_version}"
+                  
+                  echo "new_build_number=${new_build_number}" >> $GITHUB_OUTPUT
 
             - name: Commit changes
               run: |
@@ -38,7 +43,7 @@ jobs:
                 git config --local user.email "actions@github.com"
                 git add gradle.properties
 
-                commit_message="Increment build number to ${new_build_number}"
+                commit_message="Increment build number to ${{ steps.increment.outputs.new_build_number }}"
                 echo "$commit_message"
 
                 git commit -m "$commit_message"
