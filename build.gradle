@@ -2,11 +2,12 @@ plugins {
     id "fabric-loom" version "1.10-SNAPSHOT"
 }
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
-
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+base {
+    archivesName = project.archives_base_name
+    group = project.maven_group
+    def suffix = project.hasProperty('build_number') ? project.findProperty('build_number') : 'local'
+    version = project.minecraft_version + "-" + suffix
+}
 
 repositories {
     mavenLocal()
@@ -68,8 +69,21 @@ dependencies {
 }
 
 processResources {
+    def buildNumber = project.hasProperty('build_number') ? project.getProperty('build_number').toString() : ''
+    def commit = project.hasProperty('commit') ? project.getProperty('commit').toString() : ''
+
+    def propertyMap = [
+        version: project.version,
+        build_number: buildNumber,
+        commit: commit,
+        minecraft_version: project.property('minecraft_version'),
+        loader_version: project.property('loader_version')
+    ]
+
+    inputs.properties(propertyMap)
+
     filesMatching("fabric.mod.json") {
-        expand "version": project.version, "mc_version": project.minecraft_version
+        expand(propertyMap)
     }
 }
 
@@ -80,4 +94,8 @@ tasks.withType(JavaCompile).configureEach {
 
 loom {
     accessWidenerPath = file("src/main/resources/mlp.accesswidener")
+}
+
+java {
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
 }

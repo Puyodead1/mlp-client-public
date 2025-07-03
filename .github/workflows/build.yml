@@ -1,5 +1,9 @@
 name: Build and Release
 
+concurrency:
+  group: "build"
+  cancel-in-progress: false
+
 on:
     push:
         paths-ignore:
@@ -14,50 +18,22 @@ jobs:
             contents: write
 
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+            
             - name: Set up JDK 21
               uses: actions/setup-java@v4
               with:
                   java-version: "21"
                   distribution: "temurin"
 
-            - name: Increment build number
-              id: increment
-              run: |
-                  # Extract mod_version from gradle.properties
-                  version=$(grep "^mod_version" gradle.properties | cut -d'=' -f2)
-                  base_version=$(echo "$version" | cut -d'-' -f1)
-                  build_number=$(echo "$version" | grep -oP '\-\K\d+')
-
-                  new_build_number=$((build_number + 1))
-                  new_version="${base_version}-${new_build_number}"
-
-                  sed -i "s/^mod_version=.*/mod_version=${new_version}/" gradle.properties
-                  echo "Updated mod_version to ${new_version}"
-                  
-                  echo "new_build_number=${new_build_number}" >> $GITHUB_OUTPUT
-
-            - name: Commit changes
-              run: |
-                git config --local user.name "GitHub Actions"
-                git config --local user.email "actions@github.com"
-                git add gradle.properties
-
-                commit_message="Increment build number to ${{ steps.increment.outputs.new_build_number }}"
-                echo "$commit_message"
-
-                git commit -m "$commit_message"
-                git push origin HEAD
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
             - run: chmod +x gradlew
 
             - name: Setup Gradle
-              uses: gradle/actions/setup-gradle@v3.3.2
+              uses: gradle/actions/setup-gradle@v4
 
-            - name: Build with Gradle Wrapper
-              run: ./gradlew build
+            - name: Build
+              run: ./gradlew build -Pcommit=${{ github.sha }} -Pbuild_number=${{ github.run_number }}
 
             - name: Upload a Build Artifact
               uses: actions/upload-artifact@v4.3.3
