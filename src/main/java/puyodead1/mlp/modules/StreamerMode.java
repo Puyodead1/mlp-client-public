@@ -1,7 +1,6 @@
 package puyodead1.mlp.modules;
 
 import puyodead1.mlp.MLPMod;
-import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.events.packets.PacketEvent;
 import meteordevelopment.meteorclient.settings.BoolSetting;
 import meteordevelopment.meteorclient.settings.IntSetting;
@@ -11,17 +10,11 @@ import meteordevelopment.meteorclient.settings.StringSetting;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.client.network.PlayerListEntry;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public class StreamerMode extends Module {
     private final SettingGroup sgGeneral;
@@ -118,30 +111,5 @@ public class StreamerMode extends Module {
 
     public static String spoofServerBrand() {
         return Modules.get().get(StreamerMode.class).spoofServerBrand.get();
-    }
-
-    @Nullable
-    public static String anonymizePlayerNameInstances(String text) {
-        if (MeteorClient.mc != null && MeteorClient.mc.player != null && MeteorClient.mc.getNetworkHandler() != null && StreamerMode.isGenerifyNames()) {
-            for (PlayerListEntry player : MeteorClient.mc.getNetworkHandler().getPlayerList()) {
-                if (player.getProfile() == null) continue;
-                String fakeName = MLPMod.genericNames.getName(player.getProfile().getId());
-                text = StringUtils.replace(text, player.getProfile().getName(), fakeName);
-                if (player.getDisplayName() == null) continue;
-                text = StringUtils.replace(text, player.getDisplayName().getString(), fakeName);
-            }
-        }
-        return text;
-    }
-
-    public static Optional<String> getPlayerEntityName(PlayerEntity player) {
-        if (StreamerMode.isGenerifyNames() && MeteorClient.mc.getNetworkHandler() != null
-            && !player.getGameProfile().getId().equals(MeteorClient.mc.player.getUuid())
-            && MeteorClient.mc.getNetworkHandler() != null
-            && StreamerMode.isGenerifyNames()
-        ) {
-            return Optional.of(MLPMod.genericNames.getName(player.getGameProfile().getId()));
-        }
-        return Optional.empty();
     }
 }

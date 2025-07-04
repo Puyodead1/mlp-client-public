@@ -6,16 +6,12 @@
   "client": [
     "CapeFeatureRendererMixin",
     "ClientConnectionStateMixin",
-    "ClientPlayNetworkHandlerMixin",
     "GameMenuScreenMixin",
     "GameOptionsMixin",
-    "HotbarStorageMixin",
     "LogoDrawerMixin",
     "MainMixin",
     "MinecraftClientMixin",
     "MultiplayerScreenMixin",
-    "PlayerListEntryMixin",
-    "PlayerListHudMixin",
     "ServerInfoMixin",
     "SplashTextRendererMixin",
     "TitleScreenMixin"

@@ -11,14 +11,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+// QuickDelete entries on the multiplayer screen
 @Mixin(value = MultiplayerScreen.class, priority = 1)
 public abstract class MultiplayerScreenMixin extends Screen {
 
     @Shadow
-    public ButtonWidget buttonDelete;
+    private ButtonWidget buttonDelete;
 
     @Shadow
-    public MultiplayerServerListWidget serverListWidget;
+    protected MultiplayerServerListWidget serverListWidget;
 
     protected MultiplayerScreenMixin(Text title) {
         super(title);

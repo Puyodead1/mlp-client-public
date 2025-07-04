@@ -1,11 +1,7 @@
 package puyodead1.mlp.mixins;
 
-import net.minecraft.network.message.ChatVisibility;
-import net.minecraft.particle.ParticlesMode;
-import net.minecraft.util.Arm;
 import puyodead1.mlp.modules.StreamerMode;
 import net.minecraft.client.option.GameOptions;
-import net.minecraft.network.packet.c2s.common.ClientOptionsC2SPacket;
 import net.minecraft.network.packet.c2s.common.SyncedClientOptions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

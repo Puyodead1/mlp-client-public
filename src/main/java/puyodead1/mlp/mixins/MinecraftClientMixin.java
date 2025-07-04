@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-// Sets a custom window title and shows login screen on init
+// Shows login screen on init
 @Mixin(value = MinecraftClient.class)
 public abstract class MinecraftClientMixin {
     @Shadow
@@ -27,7 +27,7 @@ public abstract class MinecraftClientMixin {
 
     @ModifyConstant(method = "getWindowTitle", constant = @Constant(stringValue = "Minecraft"))
     String modifyMinecraftConst(String constant) {
-        return "MLP Client | " + constant;
+        return "MLPI | " + constant;
     }
 
     /**

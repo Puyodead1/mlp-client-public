@@ -6,6 +6,7 @@ import java.util.HashMap;
 public class MCVersionUtil {
     private static final HashMap<String, Integer> VERSIONS = new HashMap<>() {
         {
+            put("1.21.7", 771);
             put("1.21.6", 771);
             put("1.21.5", 770);
             put("1.21.4", 769);
@@ -98,7 +99,11 @@ public class MCVersionUtil {
 
     private static final HashMap<Integer, String> PROTOCOLS = new HashMap<>() {
         {
-            put(767, "1.21");
+            put(771, "1.21.6/7");
+            put(770, "1.21.5");
+            put(769, "1.21.4");
+            put(768, "1.21.2/.3");
+            put(767, "1.21/.1");
             put(766, "1.20.5/.6");
             put(765, "1.20.3/.4");
             put(764, "1.20.2");

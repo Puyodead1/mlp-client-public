@@ -2,12 +2,10 @@
   "schemaVersion": 1,
   "id": "mlp",
   "version": "${version}",
-  "name": "MLP",
+  "name": "MLPI",
   "description": "Basically an MCSDC meteor mod",
   "authors": [
-    "nxyi",
-    "Puyodead1",
-    "n-client contributors"
+    "Puyodead1"
   ],
   "contact": {},
   "license": "All-Rights-Reserved",

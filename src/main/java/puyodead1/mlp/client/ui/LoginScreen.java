@@ -1,9 +1,5 @@
 package puyodead1.mlp.client.ui;
 
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.systems.RenderPass;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTextureView;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
@@ -15,15 +11,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 import puyodead1.mlp.MLPMod;
 import puyodead1.mlp.MLPService;
 import puyodead1.mlp.utils.MLPSystem;
 
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
 import java.util.concurrent.ForkJoinPool;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;

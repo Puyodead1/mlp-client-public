@@ -13,7 +13,7 @@ import puyodead1.mlp.utils.MLPSystem;
 @Mixin(value = Systems.class, remap = false)
 public abstract class SystemsMixin {
     @Shadow
-    private static System<?> add(System<?> system) {
+    public static System<?> add(System<?> system) {
         throw new AssertionError();
     }
 

@@ -15,7 +15,7 @@ public class MLPVanityTagCMD extends Command {
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            ChatUtils.sendPlayerMsg("https://discord.gg/mlpi");
+            ChatUtils.sendPlayerMsg("https://dsc.gg/mlpi");
             return SINGLE_SUCCESS;
         });
     }

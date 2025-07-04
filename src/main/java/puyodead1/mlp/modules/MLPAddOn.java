@@ -45,21 +45,12 @@ public class MLPAddOn extends MeteorAddon {
     public void onInitialize() {
         Modules modules = Modules.get();
         modules.add(new StreamerMode());
-        modules.add(new Gun());
         modules.add(new GameModeNotifier());
         modules.add(new CapeModule());
-        modules.add(new AutoLagSign());
-        modules.add(new FireballRain());
-//        modules.add(new CraftingCrash()); // TODO: readd when fixed
-        modules.add(new ChunkCrash());
-        modules.add(new CreativeHotbarModule());
         modules.add(new Detect());
 
         Commands.add(new CopyIPCMD());
         Commands.add(new MLPVanityTagCMD());
-        Commands.add(new VelocityTeleportCMD());
-        Commands.add(new CrashCommand());
-        Commands.add(new BloatCMD());
 
         Hud.get().register(SocialEngineeringHud.INFO);
         Hud.get().register(Watermark.INFO);

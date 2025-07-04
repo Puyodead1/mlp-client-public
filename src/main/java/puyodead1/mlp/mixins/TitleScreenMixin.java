@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import puyodead1.mlp.MLPMod;
 import puyodead1.mlp.client.ui.serverlist.MLPMultiplayerScreen;
-import puyodead1.mlp.utils.MLPSystem;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = TitleScreen.class, priority = 1001)
