@@ -9,7 +9,6 @@
     "GameMenuScreenMixin",
     "GameOptionsMixin",
     "LogoDrawerMixin",
-    "MainMixin",
     "MinecraftClientMixin",
     "MultiplayerScreenMixin",
     "ServerInfoMixin",
