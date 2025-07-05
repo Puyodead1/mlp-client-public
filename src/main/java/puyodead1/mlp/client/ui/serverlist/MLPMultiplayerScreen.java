@@ -209,18 +209,20 @@ public class MLPMultiplayerScreen extends Screen {
 
     public void refreshList() {
         if (this.serverListWidget != null) {
-            this.serverListWidget.setServerList(this.serverList);
+            this.serverListWidget.clear();
             this.mlpService.find(this::setServers);
         }
     }
 
     private void setServers(List<MLPService.Server> servers) {
-        this.serverList = new MLPServerList(this.client);
-//        this.savedServerList = new ArrayList<>();
+        if(this.serverList == null) {
+            this.serverList = new MLPServerList(this.client);
+        }
         this.serverList.loadFile();
+//        this.savedServerList = new ArrayList<>();
         this.mapServers(servers);
         this.serverListWidget.setSelected(null);
-        this.serverListWidget.setServerList(this.serverList);
+//        this.serverListWidget.setServerList(this.serverList);
 //        this.serverListWidget.setSavedServers(this.savedServerList);
     }
 

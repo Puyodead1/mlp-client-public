@@ -34,8 +34,7 @@ public class MLPServerList {
 
     public void loadFile() {
         try {
-            this.servers.clear();
-            this.hiddenServers.clear();
+            this.clear();
             NbtCompound nbtCompound = NbtIo.read(this.client.runDirectory.toPath().resolve("mcsdc_servers.dat"));
             if (nbtCompound == null) {
                 return;
@@ -102,6 +101,11 @@ public class MLPServerList {
 
     public boolean hasHiddenServer(ServerInfo serverInfo) {
         return this.hiddenServers.stream().anyMatch(x -> x.address.equals(serverInfo.address));
+    }
+
+    public void clear() {
+        this.servers.clear();
+        this.hiddenServers.clear();
     }
 
     @Nullable

@@ -76,6 +76,10 @@ public class MLPMultiplayerServerListWidget extends AlwaysSelectedEntryListWidge
         return this.servers;
     }
 
+    public void clear() {
+        this.servers.clear();
+    }
+
     private void updateEntries() {
         this.clearEntries();
 //

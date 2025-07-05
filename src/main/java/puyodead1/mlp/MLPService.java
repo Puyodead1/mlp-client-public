@@ -294,10 +294,12 @@ public final class MLPService {
 
         public void setProtocol(Integer protocol) {
             this.protocol = protocol;
+            this.name = null;
         }
 
         public void setName(String name) {
             this.name = name;
+            this.protocol = null;
         }
 
         public void clear() {
