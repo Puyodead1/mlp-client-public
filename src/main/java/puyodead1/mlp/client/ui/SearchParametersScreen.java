@@ -1,6 +1,6 @@
 // copied and lightly modified from serverseeker (https://github.com/DAMcraft/MeteorServerSeeker/blob/master/src/main/java/de/damcraft/serverseeker/gui/FindNewServersScreen.java)
 
-package puyodead1.mlp.client.ui.serverlist;
+package puyodead1.mlp.client.ui;
 
 import meteordevelopment.meteorclient.gui.GuiThemes;
 import meteordevelopment.meteorclient.gui.WindowScreen;
@@ -11,6 +11,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.nbt.NbtCompound;
 import puyodead1.mlp.MLPMod;
 import puyodead1.mlp.MLPService;
+import puyodead1.mlp.client.ui.serverlist.MLPMultiplayerScreen;
 
 public class SearchParametersScreen extends WindowScreen {
     public static NbtCompound savedSettings;

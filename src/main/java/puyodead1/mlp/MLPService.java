@@ -1,6 +1,5 @@
 package puyodead1.mlp;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -12,10 +11,9 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import puyodead1.mlp.client.ui.serverlist.SearchParametersScreen;
+import puyodead1.mlp.client.ui.SearchParametersScreen;
 import puyodead1.mlp.modules.StreamerMode;
 import puyodead1.mlp.utils.FlagSerializer;
 import puyodead1.mlp.utils.MLPSystem;
@@ -32,7 +30,6 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
@@ -44,7 +41,7 @@ public final class MLPService {
         .create();
 
     public static final String API_URL = "https://interact.mcsdc.online/api";
-    public final FindServersRequest currentFindRequest = new FindServersRequest();
+    public final FindServersRequest currentFindRequest = new FindServersRequest(true);
     public final Executor executor = Executors.newFixedThreadPool(3, r -> {
         Thread thread = new Thread(r);
         thread.setName("MLPService");
@@ -76,6 +73,18 @@ public final class MLPService {
                 this.loading.set(false);
             }
         });
+    }
+
+    public Server searchServer(ServerSearchRequest req) {
+        try {
+            String content = this.post(API_URL, req);
+            LOGGER.debug("MLPService Search Request: {}", content);
+            return GSON.fromJson(content, Server.class);
+        } catch (Throwable e) {
+            LOGGER.error("MLPService searchServer Error", e);
+        }
+
+        return null;
     }
 
     public void update(UpdateServerRequest req, Runnable callback) {
@@ -140,7 +149,7 @@ public final class MLPService {
             throw new IllegalStateException(e);
         }
         int code = response.statusCode();
-        if (code != 200) {
+        if (code != 200 &&  code != 302) {
             throw new RuntimeException("status: " + code + " body: " + response.body());
         }
         return response.body();
@@ -361,14 +370,34 @@ public final class MLPService {
     }
 
     public static final class SearchParameters {
-        public final SearchFlags flags = new SearchFlags();
-        public final ExtraParameter extra = new ExtraParameter();
-        public final Version version = new Version();
+        public SearchFlags flags;
+        public ExtraParameter extra;
+        public Version version;
+        private String address;
 
+        public SearchParameters(Boolean flagSearch) {
+            if(flagSearch) {
+                this.flags = new SearchFlags();
+                this.extra = new ExtraParameter();
+                this.version = new Version();
+            }
+        }
+
+        public  void setAddress(String address) {
+            this.address = address;
+        }
     }
 
     public static final class FindServersRequest {
-        public final SearchParameters search = new SearchParameters();
+        public SearchParameters search;
+
+        public FindServersRequest(Boolean flagSearch) {
+            this.search  = new SearchParameters(flagSearch);
+        }
+    }
+
+    public static final class ServerSearchRequest {
+        public SearchParameters search = new SearchParameters(false);
     }
 
     public static final class UpdateServerParameters {

@@ -1,7 +1,7 @@
 package puyodead1.mlp.utils;
 
 import com.google.gson.*;
-import puyodead1.mlp.client.ui.serverlist.SearchParametersScreen;
+import puyodead1.mlp.client.ui.SearchParametersScreen;
 
 import java.lang.reflect.Type;
 

@@ -7,7 +7,6 @@ import com.viaversion.viafabricplus.settings.impl.GeneralSettings;
 import com.viaversion.vialoader.util.ProtocolVersionList;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import meteordevelopment.meteorclient.MeteorClient;
-import meteordevelopment.meteorclient.utils.render.color.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
@@ -30,7 +29,9 @@ import org.slf4j.Logger;
 import puyodead1.mlp.MLPMod;
 import puyodead1.mlp.MLPService;
 import puyodead1.mlp.client.ui.NotesScreen;
+import puyodead1.mlp.client.ui.SearchParametersScreen;
 import puyodead1.mlp.client.ui.ServerInfoScreen;
+import puyodead1.mlp.client.ui.TicketIDScreen;
 import puyodead1.mlp.modules.StreamerMode;
 import puyodead1.mlp.utils.MLPSystem;
 
@@ -154,6 +155,8 @@ public class MLPMultiplayerScreen extends Screen {
             this.close();
         }).width(80).build());
 
+        ButtonWidget buttonTicketID = this.addDrawableChild(ButtonWidget.builder(Text.of("TicketID Lookup"), (button) -> this.client.setScreen(TicketIDScreen.instance(this))).width(100).build());
+
         // width = button count * button width + (2 * (button count - 1))
         DirectionalLayoutWidget directionalLayoutWidget = DirectionalLayoutWidget.vertical();
         AxisGridWidget axisGridWidget = directionalLayoutWidget.add(new AxisGridWidget(490, 20, AxisGridWidget.DisplayAxis.HORIZONTAL));
@@ -166,13 +169,14 @@ public class MLPMultiplayerScreen extends Screen {
         directionalLayoutWidget.add(EmptyWidget.ofHeight(4));
 
         // width = button count * button width + (2 * (button count - 1))
-        AxisGridWidget axisGridWidget2 = directionalLayoutWidget.add(new AxisGridWidget(490, 20, AxisGridWidget.DisplayAxis.HORIZONTAL));
+        AxisGridWidget axisGridWidget2 = directionalLayoutWidget.add(new AxisGridWidget(592, 20, AxisGridWidget.DisplayAxis.HORIZONTAL));
         axisGridWidget2.add(this.buttonNotes);
         axisGridWidget2.add(this.buttonWhitelisted);
         axisGridWidget2.add(this.buttonModded);
         axisGridWidget2.add(this.buttonGriefed);
         axisGridWidget2.add(this.buttonCopy);
         axisGridWidget2.add(buttonBack);
+        axisGridWidget2.add(buttonTicketID);
 
         directionalLayoutWidget.refreshPositions();
         SimplePositioningWidget.setPos(directionalLayoutWidget, 0, this.height - 64, this.width, 64);

@@ -9,13 +9,16 @@ import meteordevelopment.meteorclient.systems.modules.Category;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.utils.PostInit;
 import meteordevelopment.meteorclient.utils.misc.MeteorStarscript;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Items;
 import org.meteordev.starscript.value.Value;
 import org.meteordev.starscript.value.ValueMap;
+import puyodead1.mlp.MLPMod;
 import puyodead1.mlp.modules.commands.*;
 import puyodead1.mlp.modules.hud.SocialEngineeringHud;
 import puyodead1.mlp.modules.hud.Watermark;
 import puyodead1.mlp.utils.MLPSystem;
+import puyodead1.mlp.utils.TicketIDGenerator;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
@@ -30,10 +33,19 @@ public class MLPAddOn extends MeteorAddon {
         }));
 
         // StarScript
-        ValueMap starscript = MeteorStarscript.ss.getGlobals().get("server").get().getMap();
-        starscript.set("brand", () -> Value.string((mc.getNetworkHandler() != null && mc.getNetworkHandler().getBrand() != null) ? mc.getNetworkHandler().getBrand() : "Unknown"));
-        starscript.set("day", () -> mc.world != null ? Value.number(Math.round((float) mc.world.getTimeOfDay() / 24000L)) : Value.string("Unknown"));
-        starscript.set("real_day", () -> mc.world != null ? Value.number(Math.round((float) ((mc.world.getTimeOfDay() / 24000L) / 3) / 24)) : Value.string("Unknown"));
+        ValueMap ss = MeteorStarscript.ss.getGlobals().get("server").get().getMap();
+        ss.set("brand", () -> Value.string((mc.getNetworkHandler() != null && mc.getNetworkHandler().getBrand() != null) ? mc.getNetworkHandler().getBrand() : "Unknown"));
+        ss.set("day", () -> mc.world != null ? Value.number(Math.round((float) mc.world.getTimeOfDay() / 24000L)) : Value.string("Unknown"));
+        ss.set("real_day", () -> mc.world != null ? Value.number(Math.round((float) ((mc.world.getTimeOfDay() / 24000L) / 3) / 24)) : Value.string("Unknown"));
+        ss.set("ticketID", () -> Value.string(getTicketID()));
+    }
+
+    public static String getTicketID(){
+        if (mc == null || mc.getNetworkHandler() == null) return "";
+        String address = MinecraftClient.getInstance().getNetworkHandler().getServerInfo().address;
+        if (!TicketIDGenerator.isValidIPv4WithPort(address)) return "";
+
+        return TicketIDGenerator.generateTicketID(address);
     }
 
     @Override
@@ -51,6 +63,7 @@ public class MLPAddOn extends MeteorAddon {
 
         Commands.add(new CopyIPCMD());
         Commands.add(new MLPVanityTagCMD());
+        Commands.add(new TicketIDCommand());
 
         Hud.get().register(SocialEngineeringHud.INFO);
         Hud.get().register(Watermark.INFO);
